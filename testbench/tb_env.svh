@@ -13,6 +13,7 @@ class tb_env extends tue_env #(tb_env_configuration);
     apb_master_agent.set_configuration(configuration.apb_configuration);
 
     ral = tb_env_ral::type_id::create("ral", this);
+    ral.set_configuration(configuration);
   endfunction
 
   function void connect_phase(uvm_phase phase);
@@ -21,5 +22,8 @@ class tb_env extends tue_env #(tb_env_configuration);
     apb_master_agent.item_port.connect(ral.bus_in);
     ral.connect_sequencer(apb_master_agent.sequencer);
   endfunction
+
+  `tue_component_default_constructor(tb_env)
+  `uvm_component_utils(tb_env)
 endclass
 `endif

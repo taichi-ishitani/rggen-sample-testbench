@@ -1,6 +1,11 @@
 module top();
   import  uvm_pkg::*;
   import  rggen_rtl_pkg::*;
+  import  tue_pkg::*;
+  import  tvip_common_pkg::*;
+  import  tvip_apb_pkg::*;
+  import  tb_env_pkg::*;
+  import  tb_tests_pkg::*;
 
   tvip_clock_if clock_if();
   initial begin
@@ -20,6 +25,17 @@ module top();
   rggen_apb_if #(16, 32)  apb_if0();
   rggen_apb_if #( 7, 32)  apb_if1();
   rggen_bus_if #( 7, 32)  register_9_if();
+
+  assign  apb_if0.psel    = apb_if.psel;
+  assign  apb_if0.penable = apb_if.penable;
+  assign  apb_if0.paddr   = apb_if.paddr;
+  assign  apb_if0.pprot   = apb_if.pprot;
+  assign  apb_if0.pwrite  = apb_if.pwrite;
+  assign  apb_if0.pwdata  = apb_if.pwdata;
+  assign  apb_if0.pstrb   = apb_if.pstrb;
+  assign  apb_if.pready   = apb_if0.pready;
+  assign  apb_if.prdata   = apb_if0.prdata;
+  assign  apb_if.pslverr  = apb_if0.pslverr;
 
   sample_0 u_sample_0 (
     .clk                    (clock_if.clk     ),

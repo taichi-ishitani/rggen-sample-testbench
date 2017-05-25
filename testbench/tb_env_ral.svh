@@ -28,6 +28,12 @@ class tb_env_ral extends tue_component #(tb_env_configuration);
     ral_predictor.adapter = ral_adapter;
   endfunction
 
+  task run_phase(uvm_phase phase);
+    forever @(negedge configuration.reset_vif.reset_n) begin
+      ral_model.reset();
+    end
+  endtask
+
   function void connect_sequencer(tvip_apb_master_sequencer sequencer);
     ral_model.default_map.set_sequencer(sequencer, ral_adapter);
   endfunction
